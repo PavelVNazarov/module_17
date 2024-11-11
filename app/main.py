@@ -1,16 +1,22 @@
 # Домашнее задание по модулю 17
 # Назаров ПВ
 
-
+import logging
 
 from fastapi import FastAPI
-from routers import task, users
+from .backend.db import engine
+from .models import Base
+
+# Настройка логирования
+logging.basicConfig()
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
 app = FastAPI()
 
-app.include_router(task.router)
-app.include_router(users.router)
+# Создаем все таблицы в базе данных
+Base.metadata.create_all(bind=engine)
 
-@app.get("/")
-async def root():
+@app.get('/')
+def read_root():
     return {"message": "Welcome to Taskmanager"}
+
