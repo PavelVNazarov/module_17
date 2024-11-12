@@ -6,6 +6,7 @@ import logging
 from fastapi import FastAPI
 from .backend.db import engine
 from .models import Base
+#from .backend.db import Base
 
 # Настройка логирования
 logging.basicConfig()
